@@ -2,7 +2,7 @@
 	require_once "db.php";
 	$isBtnSearchClicked = isset($_POST["btnSearch"]);
 	$car = null;
-	
+	$statuses = [];
 	if($isBtnSearchClicked == true) {
 		$carID = $_POST["patrolCarID"];	
 		//echo "You have search Car ID: " . $carID;
@@ -14,6 +14,17 @@
 			$statusID = $row["patrolcar_status_ID"];
 			$car = ["id"=>$carID,"statusID"=>$statusID];
 		}
+		
+		$conn = new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_DATABASE);
+		$sql = "SELECT * FROM patrolcar_status";
+		$result = $conn->query($sql);
+		while($row = $result->fetch_assoc()){
+		$id = $row["patrolcar_status_ID"];
+		$title = $row["patrolcar_status_desc"];
+		$status = ["id"=>$id, "title"=>$title];
+		array_push($statuses,$status);
+		}
+		
 		$conn->close();
 	}
 	
@@ -34,35 +45,45 @@
 		<section class="mt-3">
 		  <form>
 		  <?php
-			  if($car is != null) {
-				  
+			  if($car != null) {
+				  echo "<div class=\"form-group row\">
+							<label for=\"patrolCarID\" class=\"col-sm-4 col-form-label\">Patrol Car Number</label>
+							  <div class=\"col-sm-8\">
+								  " . $car["id"] . "
+								<input type=\"hidden\" id=\"patrolCarID\" name=\"patrolCarID\" value=\"" . $car["id"] ."\">
+							  </div>
+						  </div>
+						  <div class=\"form-group row\">
+							<label for=\"patrolCarStatus\" class=\"col-sm-4 col-form-label\">Patrol Car Status</label>
+							  <div class=\"col-sm-8\">
+									<select name=\"patrolCarStatus\" id=\"patrolCarStatus\" class=\"form-control\">
+										<option value=\"\">Select</option>
+										";
+				  						$selected = "";
+				  						foreach($statuses as $status) {
+											echo "<option value=\"" . $status["id"] . "\">".
+											$status["title"] . "</option>";
+										}
+				  						echo
+				  						"
+									</select>
+							  </div>
+						  </div>
+						  <div class=\"form-group row\">
+							  <div class=\"offset-sm-4 col-sm-8\">
+								<button type=\"submit\" class=\"btn btn-primary\" name=\"submit\" id=\"submit\">Update</button>
+							  </div>
+						  </div>";
 			  }
-			?>
-			  <div class="form-group row">
-			    <label for="patrolCarID" class="col-sm-4 col-form-label">Patrol Car Number</label>
-				  <div class="col-sm-8">
-				  <span>
-					  <?php echo $carID; ?>
-				  	<input type="hidden" id="patrolCarID" name="patrolCarID" value="<?php echo $carID ?>">
-				  </span>
-				  </div>
-			  </div>
-			  <div class="form-group row">
-			    <label for="patrolCarStatus" class="col-sm-4 col-form-label">Patrol Car Status</label>
-				  <div class="col-sm-8">
-			    	<span>
-				  		<select name="patrolCarStatus" id="patrolCarStatus" class="form-control">
-							<option value="">Select</option>
-							<option value=""></option>
-						</select>
-				    </span>
-				  </div>
-			  </div>
-			  <div class="form-group row">
-				  <div class="offset-sm-4 col-sm-8">
-			  		<button type="submit" class="btn btn-primary" name="submit" id="submit">Update</button>
-				  </div>
-			  </div>
+			  else {
+				  echo  "<div class=\"form-group row\">
+							  <div class=\"col-sm-12\">
+								No records found.
+							  </div>
+						  </div>";
+			  }
+		   ?>
+			 
 		  </form>
         </section>
 		<?php
