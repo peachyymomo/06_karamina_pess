@@ -86,6 +86,9 @@
 <meta charset="utf-8">
 <title>Dispatch Patrol Cars</title>
 <link rel="stylesheet" href="css/bootstrap-4.4.1.css" type="text/css">
+	<?php
+			include "background.php";
+		?>
 </head>
 
 <body>
@@ -146,15 +149,15 @@
 			    	<table class="table table-striped">
 						<tbody>
 							<tr>
-							<th>Car Number</th>
-							<th colspan="2">Status</th>
+							<th style="color: white">Car Number</th>
+							<th colspan="2" style="color: white">Status</th>
 							<th></th>
 							</tr>
 							<?php
 								foreach($cars as $car) {
 									echo "<tr>" .
-											"<td>" . $car["id"] . "</td>" .
-											"<td>" . $car["status"] . "</td>" .
+											"<td style=\"color:white\">" . $car["id"] . "</td>" .
+											"<td style=\"color:white\">" . $car["status"] . "</td>" .
 											"<td>" .
 												"<input type=\"checkbox\" " .
 												"value=\"" . $car["id"] . "\" " .

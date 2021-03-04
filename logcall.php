@@ -18,6 +18,9 @@
 <meta charset="utf-8">
 <title>Logcall</title>
 <link rel="stylesheet" href="css/bootstrap-4.4.1.css" type="text/css">
+	<?php
+			include "background.php";
+		?>
 </head>
 
 <body>

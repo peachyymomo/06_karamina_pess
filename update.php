@@ -5,7 +5,6 @@
 	$statuses = [];
 	if($isBtnSearchClicked == true) {
 		$carID = $_POST["patrolCarID"];	
-		//echo "You have search Car ID: " . $carID;
 		$sql = "SELECT * FROM `patrolcar` WHERE `patrolcar_ID` = '" . $carID ."'";
 		$conn = new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_DATABASE);
 		$result = $conn->query($sql);
@@ -82,6 +81,9 @@
 <meta charset="utf-8">
 <title>Update Dispatch Car</title>
 <link rel="stylesheet" href="css/bootstrap-4.4.1.css" type="text/css">
+	<?php
+			include "background.php";
+		?>
 </head>
 
 <body>

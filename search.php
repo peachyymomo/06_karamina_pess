@@ -1,9 +1,26 @@
+<?php
+	require_once("db.php");
+	$conn = new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_DATABASE);
+	$sql = "SELECT patrolcar.patrolcar_ID,patrolcar_status.patrolcar_status_desc FROM `patrolcar` INNER JOIN patrolcar_status ON patrolcar.patrolcar_status_ID = patrolcar_status.patrolcar_status_ID";
+	$result = $conn->query($sql);
+	$cars = [];
+	while($row = $result->fetch_assoc()){
+		$id = $row["patrolcar_ID"];
+		$status = $row["patrolcar_status_desc"];
+		$car = ["id"=>$id, "status"=>$status];
+		array_push($cars,$car);
+	}
+	$conn->close();
+?>
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>Search Patrol Cars</title>
 <link rel="stylesheet" href="css/bootstrap-4.4.1.css" type="text/css">
+	<?php
+			include "background.php";
+		?>
 </head>
 
 <body>
@@ -18,10 +35,30 @@
 				  <div class="col-sm-3">
 			    	<input type="text" class="form-control" id="patrolCarID" name="patrolCarID">
 				  </div>
+				  <div class="form-group row">
+			  </div>
 				  <div class="col-sm-6">
 					  <button type="submit" class="btn btn-primary" name="btnSearch" id="submit">Search</button>
 				  </div>
 			  </div>
+			  <div class="col-sm-8">
+			    	<table class="table table-striped">
+						<tbody>
+							<tr>
+							<th style="color: white">Car Number</th>
+							<th style="color: white">Status</th>
+							</tr>
+							<?php
+								foreach($cars as $car) {
+									echo "<tr>" .
+											"<td style=\"color: white\">" . $car["id"] . "</td>" .
+											"<td style=\"color: white\">" . $car["status"] . "</td>" .
+										 "<tr>";
+								}
+							?>
+						</tbody>  
+					</table>
+				  </div>
 		  </form>
         </section>
 		<?php
