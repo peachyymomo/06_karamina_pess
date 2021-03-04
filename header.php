@@ -8,7 +8,6 @@
 					<a class="nav-link" href="logcall.php">Home <span class="sr-only">(current)</span></a> </li>
 			      <li class="nav-item"> <a class="nav-link" href="dispatch.php">Dispatch</a> </li>
 				  <li class="nav-item"> <a class="nav-link" href="search.php">Search</a> </li>
-        </form>
 		          </li>
 		        </ul>
 		    </div>

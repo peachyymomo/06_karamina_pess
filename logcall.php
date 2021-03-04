@@ -11,6 +11,55 @@
 		array_push($incidentTypes,$incidentType);
 	}
 	$conn->close();
+	
+	session_start();
+	$conn = new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_DATABASE);
+	$sql = "SELECT * FROM login WHERE userID='$userID' and password='$pass'";
+	if (isset($_POST['userID']) && isset($_POST['password'])) {
+		function validate($data){
+			$data = trim($data);
+			$data = stripslashes($data);
+			$data = htmlspecialchars($data);
+			return $data;
+		}
+		$userID = validate($_POST['userID']);
+		$pass = validate($_POST['password']);
+		
+		if(empty($userID) && (empty($pass))){
+			header("Location: login.php?error=User ID and Password is required");
+			exit();
+		}
+		else if(empty($userID)) {
+			header("Location: login.php?error=User ID is required");
+			exit();
+		}
+		else if(empty($pass)){
+			header("Location: login.php?error=Password is required");
+			exit();
+			}	
+			else{
+			$sql = "SELECT * FROM login WHERE userID='$userID' and password='$pass'";
+			$result = mysqli_query($conn,$sql);
+				if(mysqli_num_rows($result) === 1){
+					$row = mysqli_fetch_assoc($result);
+					if($row['userID'] === $userID && $row['password'] === $password){
+						$_SESSION['userID'] = $row['userID'];
+						$_SESSION['password'] = $row['password'];
+						header("Location:logcall.php");
+						exit();
+					}
+					else{
+						header("Location:login.php?error=Incorrect User ID or Password");
+						exit();
+						}
+					}
+				}
+			}
+			else{
+			header("Location: login.php");
+			exit();
+			}	
+			$conn->close();
 ?>
 <!doctype html>
 <html>
