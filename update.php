@@ -5,7 +5,7 @@
 	$statuses = [];
 	if($isBtnSearchClicked == true) {
 		$carID = $_POST["patrolCarID"];	
-		$sql = "SELECT * FROM `patrolcar` WHERE `patrolcar_ID` = '" . $carID ."'";
+		$sql = "SELECT * FROM `patrolcar` WHERE `patrolcar_ID` = '" . $carID . "'";
 		$conn = new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_DATABASE);
 		$result = $conn->query($sql);
 		if($row = $result->fetch_assoc()) {
@@ -133,7 +133,7 @@
 			  }
 			  else {
 				  echo  "<div class=\"form-group row\">
-							  <div class=\"col-sm-12\">
+							  <div class=\"col-sm-12\" style=\"color:white\">
 								No records found.
 							  </div>
 						  </div>";
