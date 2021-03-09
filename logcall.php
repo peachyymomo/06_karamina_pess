@@ -54,7 +54,7 @@
 					  <option value="">Select</option>
 					  <?php
 						foreach($incidentTypes as $incidentType){
-							echo "<option>" . $incidentType["type"] . "</option>";
+							echo "<option " . "value=\"" . $type["type"] . "\">". $incidentType["type"] . "</option>";
 						}
 					  ?>
 					</select>

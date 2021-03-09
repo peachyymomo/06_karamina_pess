@@ -46,7 +46,7 @@
 		$typeOfIncident = $_POST["typeOfIncident"];
 		$descriptionOfIncident = $_POST["descriptionOfIncident"];
 		
-		$sql = "INSERT INTO `incident`(`caller_name`, `phone_number`, `incident_type_ID`, `incident_location`, `incident_desc`, `incident_status_ID`, `time_called`) VALUES ('" . $callerName ."','" . $contactNo ."','" . $typeOfIncident."','" . $locationOfIncident ."','" . $descriptionOfIncident ."','" . $incidentStatus ."',now())";
+		$sql = "INSERT INTO `incident`(`caller_name`, `phone_number`, `incident_type_desc`, `incident_location`, `incident_desc`, `incident_status_ID`, `time_called`) VALUES ('" . $callerName ."','" . $contactNo ."','" . $typeOfIncident."','" . $locationOfIncident ."','" . $descriptionOfIncident ."','" . $incidentStatus ."',now())";
 		$conn = new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_DATABASE);
 		$insertIncidentSuccess = $conn->query($sql);
 		if($insertIncidentSuccess == false) {
