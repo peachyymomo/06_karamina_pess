@@ -6,7 +6,7 @@
 	$descriptionOfIncident = $_POST["descriptionOfIncident"];
 	require_once "db.php";
 	$conn = new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_DATABASE);
-	$sql = "SELECT patrolcar.patrolcar_ID,patrolcar_status.patrolcar_status_desc FROM `patrolcar` INNER JOIN patrolcar_status ON patrolcar.patrolcar_status_ID = patrolcar_status.patrolcar_status_ID";
+	$sql = "SELECT patrolcar.patrolcar_ID,patrolcar_status.patrolcar_status_desc FROM `patrolcar` INNER JOIN patrolcar_status ON patrolcar.patrolcar_status_ID = patrolcar_status.patrolcar_status_ID WHERE patrolcar_status.patrolcar_status_ID = 3";
 	$result = $conn->query($sql);
 	$cars = [];
 	while($row = $result->fetch_assoc()){
@@ -47,19 +47,16 @@
 		$descriptionOfIncident = $_POST["descriptionOfIncident"];
 		
 		$sql = "INSERT INTO `incident`(`caller_name`, `phone_number`, `incident_type_ID`, `incident_location`, `incident_desc`, `incident_status_ID`, `time_called`) VALUES ('" . $callerName ."','" . $contactNo ."','" . $typeOfIncident."','" . $locationOfIncident ."','" . $descriptionOfIncident ."','" . $incidentStatus ."',now())";
-		//echo $sql;
 		$conn = new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_DATABASE);
 		$insertIncidentSuccess = $conn->query($sql);
 		if($insertIncidentSuccess == false) {
 			echo "Error:" . $sql . "<br>" . $conn->error;
 		}
 		$incidentID = mysqli_insert_id($conn);
-		//echo "<br>new incident id: " . $incidentID;
 		$updateSuccess = false;
 		$insertDispatchSuccess = false;
 		
 		foreach($patrolcarDispatched as $eachCarID) {
-			//echo $eachCarID . "<br>";
 			$sql = "UPDATE `patrolcar` SET `patrolcar_status_ID`= 1 WHERE `patrolcar_ID`='" . $eachCarID ."'";
 			$updateSuccess = $conn->query($sql);
 			

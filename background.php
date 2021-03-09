@@ -1,6 +1,7 @@
 <style>
-	body {
-		background: url("images/bluebackground.jpg")
+	body, html {
+		background: url("images/bluebackground.gif");
+		background-size: cover;
 	}
 	.container {
 		background: black;
